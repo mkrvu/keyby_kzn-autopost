@@ -1,0 +1,51 @@
+name: autopost
+
+on:
+  schedule:
+    - cron: "0 9 * * *"   # 12:00 по Москве
+  workflow_dispatch:
+    inputs:
+      publish:
+        description: "Публиковать в Instagram (false — только собрать слайды)"
+        type: boolean
+        default: true
+
+permissions:
+  contents: write
+
+concurrency: autopost
+
+jobs:
+  post:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - run: pip install -r requirements.txt
+
+      - name: Собрать слайды
+        id: prep
+        run: python autopost.py prepare
+
+      - name: Залить слайды в репозиторий
+        if: steps.prep.outputs.object
+        run: |
+          git config user.name "keyby-autopost"
+          git config user.email "actions@users.noreply.github.com"
+          git add posts
+          git diff --cached --quiet || git commit -m "slides ${{ steps.prep.outputs.object }}"
+          git push
+
+      - name: Опубликовать в Instagram
+        if: steps.prep.outputs.object && (github.event_name == 'schedule' || inputs.publish)
+        env:
+          IG_TOKEN: ${{ secrets.IG_TOKEN }}
+        run: |
+          python autopost.py publish ${{ steps.prep.outputs.object }}
+          git add state
+          git diff --cached --quiet || git commit -m "posted ${{ steps.prep.outputs.object }}"
+          git push

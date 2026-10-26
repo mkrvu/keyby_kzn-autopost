@@ -1,0 +1,28 @@
+name: refresh-token
+
+# Токен Instagram живёт 60 дней. Раз в 2 недели продлеваем его и
+# записываем новый в секрет IG_TOKEN. Нужен секрет GH_PAT
+# (fine-grained токен GitHub с правом Secrets: Read and write на этот репозиторий).
+
+on:
+  schedule:
+    - cron: "0 6 1,15 * *"
+  workflow_dispatch:
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r requirements.txt
+      - name: Продлить токен
+        env:
+          IG_TOKEN: ${{ secrets.IG_TOKEN }}
+          GH_TOKEN: ${{ secrets.GH_PAT }}
+        run: |
+          NEW=$(python autopost.py refresh)
+          echo "::add-mask::$NEW"
+          gh secret set IG_TOKEN --body "$NEW" --repo "$GITHUB_REPOSITORY"
