@@ -204,7 +204,7 @@ def base(photo, **kw):
 
 
 def wrap(draw, text, f, max_w):
-    words, lines, cur = text.split(), [], ""
+    words, lines, cur = text.split(" "), [], ""
     for w_ in words:
         t = (cur + " " + w_).strip()
         if draw.textlength(t, font=f) <= max_w or not cur:
@@ -290,11 +290,12 @@ def headline(info):
     addr = re.sub(r"^(ул\.?|улица)\s*", "", info["address"], flags=re.I).replace(", ", " ") if info["address"] else ""
     if not addr:
         addr = re.sub(r"^(ул\.?|улица)\s*", "", info["name"], flags=re.I)
+    addr = re.sub(r" (\S+)$", "\u00a0\\1", addr)  # номер дома не отрываем от улицы
     return f"{info['type']}, {addr}" if addr else info["type"]
 
 
 def slide_cover(info, photo, n_total):
-    img = base(photo, top=0.55, mid=0.2, bottom=0.85)
+    img = base(photo, top=0.7, mid=0.2, bottom=0.85)
     d = ImageDraw.Draw(img)
     header(d, 1, specs(info))
     # цена
@@ -333,7 +334,7 @@ def slide_cover(info, photo, n_total):
 
 
 def slide_photo(num, photo, room, title, tags):
-    img = base(photo, top=0.5, mid=0.1, bottom=0.6)
+    img = base(photo, top=0.78, mid=0.12, bottom=0.65)
     d = ImageDraw.Draw(img)
     header(d, num, room or "")
     if title:
