@@ -29,10 +29,8 @@ GRAPH = "https://graph.instagram.com/v23.0"
 UA = {"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 Chrome/124 Safari/537.36"}
 
 W, H = 1080, 1350
-BG, INK, GREY, LINE = (241, 241, 238), (38, 38, 38), (122, 122, 118), (211, 211, 207)
 ACCENT = (116, 184, 81)  # зелёный кейби
 WHITE = (255, 255, 255)
-LOGO = "КЕЙБИ.РФ"
 
 
 # ---------------------------------------------------------------- Telegram
@@ -164,6 +162,14 @@ def parse_text(text):
 
 
 # ---------------------------------------------------------------- рендер
+# Шаблон: фото на весь слайд, затемнение; сверху «[ N ]» и характеристики,
+# крупно цена/заголовок зелёным, теги-плашки снизу, логотип кейби.рф на каждом слайде.
+
+TEXTS = ROOT / "texts"
+LOGO_PNG = ROOT / "assets" / "logo.png"
+DARK = (20, 20, 20)
+PAD = 64
+
 
 def font(name, size):
     return ImageFont.truetype(str(FONTS / f"{name}.ttf"), size)
@@ -175,142 +181,226 @@ def load_img(url):
     return Image.open(io.BytesIO(r.content)).convert("RGB")
 
 
-def cover_fit(d_img, im, x, y, w, h):
-    w, h = int(w), int(h)
+def cover_fit(im, w, h):
     s = max(w / im.width, h / im.height)
     nw, nh = max(w, round(im.width * s)), max(h, round(im.height * s))
     r = im.resize((nw, nh), Image.LANCZOS)
     l, t = (nw - w) // 2, (nh - h) // 2
-    d_img.paste(r.crop((l, t, l + w, t + h)), (int(x), int(y)))
+    return r.crop((l, t, l + w, t + h))
 
 
-def fit_font(draw, text, max_w, start, name="Unbounded-Black", min_size=40):
-    s = start
-    while s > min_size:
-        f = font(name, s)
-        if draw.textlength(text, font=f) <= max_w:
-            return f
-        s -= 2
-    return font(name, min_size)
+def shade(img, top=0.55, mid=0.25, bottom=0.8):
+    """Затемнение: сверху и снизу сильнее, чтобы читался текст."""
+    mask = Image.new("L", (1, H))
+    for y in range(H):
+        t = y / H
+        a = top + (mid - top) * (t / 0.35) if t < 0.35 else (mid if t < 0.5 else mid + (bottom - mid) * ((t - 0.5) / 0.5))
+        mask.putpixel((0, y), int(255 * a))
+    return Image.composite(Image.new("RGB", (W, H), (0, 0, 0)), img, mask.resize((W, H)))
 
 
-def pill(draw, x, y, h, text, size, bg=ACCENT, fg=WHITE):
-    f = font("Manrope-Bold", size)
-    w = draw.textlength(text, font=f) + h * 0.9
-    draw.rounded_rectangle((x, y, x + w, y + h), radius=h / 2, fill=bg)
-    draw.text((x + h * 0.45, y + h / 2), text, font=f, fill=fg, anchor="lm")
-    return w
+def base(photo, **kw):
+    return shade(cover_fit(photo, W, H), **kw)
 
 
-def arrow(draw, cx, cy, half, color=WHITE, width=4):
-    draw.line((cx - half, cy, cx + half, cy), fill=color, width=width)
-    draw.line((cx + half - 14, cy - 12, cx + half, cy), fill=color, width=width)
-    draw.line((cx + half - 14, cy + 12, cx + half, cy), fill=color, width=width)
+def wrap(draw, text, f, max_w):
+    words, lines, cur = text.split(), [], ""
+    for w_ in words:
+        t = (cur + " " + w_).strip()
+        if draw.textlength(t, font=f) <= max_w or not cur:
+            cur = t
+        else:
+            lines.append(cur)
+            cur = w_
+    if cur:
+        lines.append(cur)
+    return lines
 
 
-def price_line(info):
-    return f"{info['price']}₽" + (" + КУ" if info["ku"] else "")
+def text_block(draw, text, x, y, max_w, name, size, fill, max_lines=3, lh=1.05, min_size=40):
+    """Рисует перенесённый текст от y (верх), уменьшая кегль, если не влезает. Возвращает нижнюю границу."""
+    while True:
+        f = font(name, size)
+        lines = wrap(draw, text, f, max_w)
+        if len(lines) <= max_lines and all(draw.textlength(l, font=f) <= max_w for l in lines) or size <= min_size:
+            break
+        size -= 4
+    for i, l in enumerate(lines):
+        draw.text((x, y + i * size * lh), l, font=f, fill=fill, anchor="lt")
+    return y + len(lines) * size * lh
 
 
-def slide_cover(info, ims):
-    img = Image.new("RGB", (W, H), (17, 17, 17))
-    g = 6
-    cover_fit(img, ims[0], 0, 0, W / 2 - g / 2, 560)
-    cover_fit(img, ims[1 % len(ims)], W / 2 + g / 2, 0, W / 2 - g / 2, 700)
-    cover_fit(img, ims[2 % len(ims)], 0, 560 + g, W / 2 - g / 2, H - 560 - g)
-    cover_fit(img, ims[3 % len(ims)], W / 2 + g / 2, 700 + g, W / 2 - g / 2, H - 700 - g)
-    # градиент снизу
-    grad = Image.new("L", (1, H))
-    for yy in range(H):
-        t = max(0.0, (yy - H * 0.35) / (H * 0.65))
-        a = 0.6 * min(1, t / 0.45) if t < 0.45 else 0.6 + 0.28 * (t - 0.45) / 0.55
-        grad.putpixel((0, yy), int(255 * a))
-    img = Image.composite(Image.new("RGB", (W, H), (0, 0, 0)), img, grad.resize((W, H)))
+def tag_row(draw, tags, y_bottom, accent_idx):
+    """Плашки снизу, переносятся на новую строку; рисуются снизу вверх."""
+    f = font("Manrope-Bold", 34)
+    h, gap = 72, 14
+    rows, cur, cw = [], [], 0
+    for i, t in enumerate(tags):
+        w = draw.textlength(t, font=f) + 56
+        if cur and cw + gap + w > W - 2 * PAD:
+            rows.append(cur); cur, cw = [], 0
+        cur.append((i, t, w)); cw += (gap if cw else 0) + w
+    if cur:
+        rows.append(cur)
+    y = y_bottom - len(rows) * (h + gap) + gap
+    top = y
+    for row in rows:
+        x = PAD
+        for i, t, w in row:
+            acc = i == accent_idx
+            draw.rounded_rectangle((x, y, x + w, y + h), radius=h / 2, fill=ACCENT if acc else WHITE)
+            draw.text((x + w / 2, y + h / 2 + 1), t, font=f, fill=WHITE if acc else DARK, anchor="mm")
+            x += w + gap
+        y += h + gap
+    return top
+
+
+_logo_cache = {}
+
+
+def logo(img, cx, cy, width=210):
+    if width not in _logo_cache:
+        lg = Image.open(LOGO_PNG).convert("RGBA")
+        _logo_cache[width] = lg.resize((width, round(lg.height * width / lg.width)), Image.LANCZOS)
+    lg = _logo_cache[width]
+    img.paste(lg, (int(cx - lg.width / 2), int(cy - lg.height / 2)), lg)
+
+
+def header(draw, num, right):
+    f = font("Manrope-ExtraBold", 30)
+    draw.text((PAD, 70), f"[ {num} ]", font=f, fill=WHITE, anchor="lm")
+    draw.text((W - PAD, 70), right.upper(), font=f, fill=WHITE, anchor="rm")
+
+
+def specs(info):
+    parts = [info["type"]]
+    if info["area"]:
+        parts.append(f"{info['area']} м²")
+    if info["floor"]:
+        parts.append(f"{info['floor']} этаж")
+    return " · ".join(parts)
+
+
+def price_big(info):
+    return info["price"].replace(".", " ") + " ₽"
+
+
+def headline(info):
+    """Комнатность и адрес: «Евро-2к, Чистопольская 88»."""
+    addr = re.sub(r"^(ул\.?|улица)\s*", "", info["address"], flags=re.I).replace(", ", " ") if info["address"] else ""
+    if not addr:
+        addr = re.sub(r"^(ул\.?|улица)\s*", "", info["name"], flags=re.I)
+    return f"{info['type']}, {addr}" if addr else info["type"]
+
+
+def slide_cover(info, photo, n_total):
+    img = base(photo, top=0.55, mid=0.2, bottom=0.85)
     d = ImageDraw.Draw(img)
-    label = info["type"] + (f" · {info['district']}" if info["district"] else "")
-    lw = d.textlength(label, font=font("Manrope-Bold", 30)) + 62 * 0.9
-    pill(d, (W - lw) / 2, 64, 62, label, 30)
-    l1 = info["cover"]
-    l2 = (info["name"] or info["district"] or "Казань").upper()
-    f = min(fit_font(d, l1, W - 120, 140), fit_font(d, l2, W - 120, 140), key=lambda x: x.size)
-    d.text((60, 930), l1, font=f, fill=WHITE, anchor="ls")
-    d.text((60, 930 + f.size * 1.08), l2, font=f, fill=WHITE, anchor="ls")
-    x, y = 60, 1110
-    x += pill(d, x, y, 84, price_line(info), 38) + 14
+    header(d, 1, specs(info))
+    # цена
+    pf = font("Unbounded-Black", 150)
+    while d.textlength(price_big(info), font=pf) > W - 2 * PAD:
+        pf = font("Unbounded-Black", pf.size - 6)
+    d.text((PAD, 130), price_big(info), font=pf, fill=ACCENT, anchor="lt")
+    sub = "в месяц" + (" + КУ" if info["ku"] else "")
+    d.text((PAD + 4, 130 + pf.size * 1.12), sub, font=font("Manrope-ExtraBold", 40), fill=WHITE, anchor="lt")
+    # теги и заголовок снизу
+    tags = ["Проверенная квартира"]
     if info["pets"] == "можно":
-        x += pill(d, x, y, 84, "можно с животными", 38) + 14
-    elif info["deposit"] == "без залога":
-        x += pill(d, x, y, 84, "без залога", 38) + 14
-    d.ellipse((x, y, x + 84, y + 84), fill=ACCENT)
-    arrow(d, x + 42, y + 42, 18)
-    d.text((60, 1292), LOGO, font=font("Unbounded-Black", 34), fill=WHITE, anchor="ls")
+        tags.append("можно с животными")
+    if info["deposit"] == "без залога":
+        tags.append("без залога")
+    elif info["deposit"]:
+        tags.append(f"залог {info['deposit'].replace('.', ' ').replace('₽', ' ₽')}")
+    top = tag_row(d, tags, 1170, accent_idx=0)
+    # заголовок над тегами
+    f_size = 76
+    hl = headline(info)
+    probe = ImageDraw.Draw(Image.new("RGB", (1, 1)))
+    while True:
+        lines = wrap(probe, hl, font("Manrope-ExtraBold", f_size), W - 2 * PAD)
+        if len(lines) <= 3 or f_size <= 48:
+            break
+        f_size -= 4
+    y0 = top - 34 - len(lines) * f_size * 1.05
+    text_block(d, hl, PAD, y0, W - 2 * PAD, "Manrope-ExtraBold", f_size, WHITE, max_lines=3)
+    # низ
+    f = font("Manrope-ExtraBold", 30)
+    d.text((PAD, H - 70), (info["district"] or "Казань").upper(), font=f, fill=WHITE, anchor="lm")
+    d.text((W - PAD, H - 70), "ЛИСТАЙ >>>", font=f, fill=WHITE, anchor="rm")
+    logo(img, W / 2, H - 70, 190)
     return img
 
 
-def slide_collage(info, ims, num):
-    img = Image.new("RGB", (W, H), BG)
+def slide_photo(num, photo, room, title, tags):
+    img = base(photo, top=0.5, mid=0.1, bottom=0.6)
     d = ImageDraw.Draw(img)
-    d.text((W / 2, 82), LOGO, font=font("Unbounded-Black", 34), fill=INK, anchor="ms")
-    m, g = 52, 12
-    iw = W - 2 * m
-    tw = (iw - g) / 2
-    cover_fit(img, ims[0], m, 112, tw, 500)
-    cover_fit(img, ims[1], m + tw + g, 112, tw, 500)
-    bw = (iw - 2 * g) / 3
-    for i in range(3):
-        cover_fit(img, ims[2 + i], m + i * (bw + g), 624, bw, 400)
-    d.text((m, 1140), info["title"], font=fit_font(d, info["title"], iw, 120), fill=INK, anchor="ls")
-    where = ", ".join(x for x in [info["name"], info["address"]] if x) or info["district"]
-    f = font("Manrope-Medium", 42)
-    while d.textlength(where, font=f) > iw - 240 and len(where) > 10:
-        where = where[:-2].rstrip(" ,") + "…"
-    d.text((m, 1222), where, font=f, fill=INK, anchor="ls")
-    d.text((m, 1285), f"{info['price']}₽/мес" + (" + КУ" if info["ku"] else ""), font=f, fill=INK, anchor="ls")
-    cx = W - m - 170
-    d.ellipse((cx - 26, 1244, cx + 26, 1296), fill=ACCENT)
-    d.text((cx, 1270), str(num), font=font("Manrope-Bold", 30), fill=WHITE, anchor="mm")
-    x = W - m - 134
-    d.rounded_rectangle((x, 1244, x + 134, 1296), radius=26, fill=ACCENT)
-    arrow(d, x + 67, 1270, 35, width=3)
+    header(d, num, room or "")
+    if title:
+        text_block(d, title.lower(), PAD, 120, W - 2 * PAD, "Unbounded-Black", 84, ACCENT, max_lines=3, lh=1.08, min_size=56)
+    if tags:
+        tag_row(d, tags, H - 150, accent_idx=len(tags) - 1)
+    logo(img, W / 2, H - 70, 190)
     return img
 
 
-def slide_details(info, im):
-    img = Image.new("RGB", (W, H), BG)
+def slide_terms(num, info, photo, title="готова к заселению"):
+    img = base(photo, top=0.75, mid=0.7, bottom=0.8)
     d = ImageDraw.Draw(img)
-    d.text((W / 2, 82), LOGO, font=font("Unbounded-Black", 34), fill=INK, anchor="ms")
-    m = 52
-    iw = W - 2 * m
-    rows = [("Аренда", price_line(info)), ("Залог", info["deposit"]), ("Комиссия", info["commission"]),
-            ("Площадь", f"{info['area']} м²" if info["area"] else ""), ("Этаж", info["floor"]),
+    header(d, num, "Условия")
+    y = text_block(d, title, PAD, 120, W - 2 * PAD, "Unbounded-Black", 84, ACCENT, max_lines=2, lh=1.08)
+    rows = [("Аренда", f"{info['price'].replace('.', ' ')} ₽/мес" + (" + КУ" if info["ku"] else "")),
+            ("Квартира", specs(info).lower()),
+            ("Адрес", ", ".join(x for x in [info["name"], info["address"]] if x)),
+            ("Район", info["district"]),
+            ("Залог", info["deposit"].replace(".", " ").replace("₽", " ₽")),
+            ("Комиссия", info["commission"]),
             ("Животные", info["pets"])]
-    rows = [r for r in rows if r[1]][:6]
-    ph = 480 + (6 - len(rows)) * 72
-    cover_fit(img, im, m, 112, iw, ph)
-    d.text((m, ph + 220), "УСЛОВИЯ", font=font("Unbounded-Black", 88), fill=INK, anchor="ls")
-    y = ph + 265
-    fl, fv = font("Manrope-Medium", 38), font("Manrope-Bold", 38)
+    rows = [r for r in rows if r[1]]
+    y += 40
+    fl, fv = font("Manrope-Bold", 36), font("Manrope-ExtraBold", 36)
     for a, b in rows:
-        d.line((m, y, W - m, y), fill=LINE, width=2)
-        d.text((m, y + 50), a, font=fl, fill=GREY, anchor="ls")
-        d.text((W - m, y + 50), b, font=fv, fill=INK, anchor="rs")
-        y += 72
-    d.line((m, y, W - m, y), fill=LINE, width=2)
-    pill(d, m, 1224, 84, f"Объект {info['object']} · кейби.рф", 36)
+        d.text((PAD, y + 40), a, font=fl, fill=WHITE, anchor="ls")
+        val = b
+        while d.textlength(val, font=fv) > W - 2 * PAD - 260 and len(val) > 8:
+            val = val[:-2].rstrip(" ,") + "…"
+        d.text((W - PAD, y + 40), val, font=fv, fill=WHITE, anchor="rs")
+        y += 64
+        d.line((PAD, y, W - PAD, y), fill=(255, 255, 255, 90), width=1)
+    # кнопка
+    by = H - 300
+    d.rounded_rectangle((PAD, by, W - PAD, by + 112), radius=56, fill=ACCENT)
+    d.text((PAD + 50, by + 56), "Контакт на сайте", font=font("Manrope-ExtraBold", 46), fill=WHITE, anchor="lm")
+    d.text((W - PAD - 50, by + 56), ">>>", font=font("Manrope-ExtraBold", 46), fill=WHITE, anchor="rm")
+    d.text((W / 2, by + 160), f"НОМЕР ОБЪЕКТА {info['object']} · КЕЙБИ.РФ", font=font("Manrope-ExtraBold", 30), fill=WHITE, anchor="mm")
+    logo(img, W / 2, H - 70, 190)
     return img
+
+
+def plan_slides(info):
+    """Какие фото на каких слайдах. Берётся из texts/<объект>.json, если есть."""
+    tf = TEXTS / f"{info['object']}.json"
+    n = len(info["photos"])
+    if tf.exists():
+        return json.loads(tf.read_text(encoding="utf-8"))
+    return {"cover": 0, "slides": [{"photo": i} for i in range(1, min(n, 8))], "terms_photo": n - 1}
 
 
 def render(info, outdir):
-    ims = [load_img(u) for u in info["photos"]]
-    slides = [slide_cover(info, ims[:4]), slide_collage(info, ims[:5], 1)]
-    if len(ims) >= 10:
-        slides.append(slide_collage(info, ims[5:10], 2))
-    slides.append(slide_details(info, ims[-1]))
+    plan = plan_slides(info)
+    need = {plan["cover"], plan["terms_photo"], *[s["photo"] for s in plan["slides"]]}
+    ims = {i: load_img(info["photos"][i]) for i in need if i < len(info["photos"])}
+    slides = [slide_cover(info, ims[plan["cover"]], 0)]
+    for s in plan["slides"]:
+        if s["photo"] in ims:
+            slides.append(slide_photo(len(slides) + 1, ims[s["photo"]], s.get("room", ""), s.get("title", ""), s.get("tags", [])))
+    slides.append(slide_terms(len(slides) + 1, info, ims[plan["terms_photo"]], plan.get("terms_title", "готова к заселению")))
+    slides = slides[:10]
     outdir.mkdir(parents=True, exist_ok=True)
     for f in outdir.glob("*.jpg"):
         f.unlink()
-    for i, s in enumerate(slides, 1):
-        s.save(outdir / f"{i}.jpg", "JPEG", quality=90, optimize=True)
+    for i, sl in enumerate(slides, 1):
+        sl.save(outdir / f"{i}.jpg", "JPEG", quality=90, optimize=True)
     (outdir / "caption.txt").write_text(caption(info), encoding="utf-8")
     (outdir / "meta.json").write_text(json.dumps(info, ensure_ascii=False, indent=1), encoding="utf-8")
     return len(slides)
@@ -401,7 +491,9 @@ def main():
     cmd = sys.argv[1] if len(sys.argv) > 1 else "prepare"
     if cmd == "prepare":
         done = {p["object"] for p in load_state()["posted"]}
-        listings = [l for l in collect_listings() if l["object"] not in done]
+        want = os.environ.get("OBJECT", "").strip()
+        listings = collect_listings(pages=8 if want else 3)
+        listings = [l for l in listings if l["object"] == want] if want else [l for l in listings if l["object"] not in done]
         if not listings:
             print("нет новых объявлений"); return
         info = listings[-1]  # самое свежее

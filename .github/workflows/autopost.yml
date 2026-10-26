@@ -9,6 +9,10 @@ on:
         description: "Публиковать в Instagram (false — только собрать слайды)"
         type: boolean
         default: true
+      object:
+        description: "Номер объекта (пусто — самое свежее)"
+        type: string
+        default: ""
 
 permissions:
   contents: write
@@ -29,6 +33,8 @@ jobs:
 
       - name: Собрать слайды
         id: prep
+        env:
+          OBJECT: ${{ inputs.object }}
         run: python autopost.py prepare
 
       - name: Залить слайды в репозиторий
