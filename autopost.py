@@ -150,6 +150,10 @@ def parse_text(text):
     info["pets"] = "можно" if re.search(r"можно с животн", body, re.I) else ("нельзя" if re.search(r"без животн|нельзя с животн", body, re.I) else "")
     addr = lines[1] if len(lines) > 1 and not re.match(r"^[\d\s.]{4,}", lines[1]) else ""
     info["address"] = addr if addr.lower() != info["name"].lower() else ""
+    # «1к Правды» + «ул. Правды» — название это просто улица
+    if info["address"] and info["name"] and info["name"].lower() in info["address"].lower():
+        info["name"] = info["address"]
+        info["address"] = ""
     district = ""
     for tag in re.findall(r"#([^\s@#]+)", body):
         if not re.match(r"^(евро)?\d*к$|^студия$|^комната$", tag, re.I):
@@ -277,13 +281,14 @@ def slide_details(info, im):
     d.text((W / 2, 82), LOGO, font=font("Unbounded-Black", 34), fill=INK, anchor="ms")
     m = 52
     iw = W - 2 * m
-    cover_fit(img, im, m, 112, iw, 480)
-    d.text((m, 700), "УСЛОВИЯ", font=font("Unbounded-Black", 88), fill=INK, anchor="ls")
     rows = [("Аренда", price_line(info)), ("Залог", info["deposit"]), ("Комиссия", info["commission"]),
             ("Площадь", f"{info['area']} м²" if info["area"] else ""), ("Этаж", info["floor"]),
             ("Животные", info["pets"])]
     rows = [r for r in rows if r[1]][:6]
-    y = 745
+    ph = 480 + (6 - len(rows)) * 72
+    cover_fit(img, im, m, 112, iw, ph)
+    d.text((m, ph + 220), "УСЛОВИЯ", font=font("Unbounded-Black", 88), fill=INK, anchor="ls")
+    y = ph + 265
     fl, fv = font("Manrope-Medium", 38), font("Manrope-Bold", 38)
     for a, b in rows:
         d.line((m, y, W - m, y), fill=LINE, width=2)
