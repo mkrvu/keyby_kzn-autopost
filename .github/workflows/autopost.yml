@@ -35,6 +35,7 @@ jobs:
         id: prep
         env:
           OBJECT: ${{ inputs.object }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
         run: python autopost.py prepare
 
       - name: Залить слайды в репозиторий
@@ -42,7 +43,7 @@ jobs:
         run: |
           git config user.name "keyby-autopost"
           git config user.email "actions@users.noreply.github.com"
-          git add posts
+          git add posts texts
           git diff --cached --quiet || git commit -m "slides ${{ steps.prep.outputs.object }}"
           git push
 

@@ -378,13 +378,58 @@ def slide_terms(num, info, photo, title="готова к заселению"):
     return img
 
 
-def plan_slides(info):
-    """Какие фото на каких слайдах. Берётся из texts/<объект>.json, если есть."""
-    tf = TEXTS / f"{info['object']}.json"
+AI_PROMPT = """Ты делаешь карусель для Instagram сервиса аренды квартир кейби.рф.
+Объявление: {listing}
+Тебе даны фото квартиры, пронумерованные с 0. Верни ТОЛЬКО JSON без пояснений:
+{{"cover": <номер самого привлекательного светлого общего кадра>,
+ "slides": [{{"photo": <номер>, "room": "<комната: Кухня-гостиная, Кухня, Гостиная, Спальня, Санузел, Прихожая, Балкон, Детская, Кабинет>",
+   "title": "<короткий цепляющий заголовок о том, что видно на фото, 2-5 слов, строчными, без точки>",
+   "tags": ["<2-3 предмета мебели или техники, которые ТОЧНО видны на этом фото, 1-3 слова каждый>"]}}],
+ "terms_photo": <номер фото для фона слайда условий, не повторять cover>}}
+Правила: в slides от 4 до 7 фото, без cover и без почти одинаковых кадров; порядок — как экскурсия
+(общая комната/кухня → спальня → санузел → прочее); не придумывай то, чего нет на фото;
+не пиши про цену и адрес; заголовки разные; без эмодзи."""
+
+
+def ai_plan(info):
+    key = os.environ.get("ANTHROPIC_API_KEY")
+    if not key:
+        return None
+    listing = {k: info[k] for k in ("type", "name", "address", "area", "floor", "pets")}
+    content = []
+    for i, u in enumerate(info["photos"]):
+        content += [{"type": "text", "text": f"Фото {i}:"}, {"type": "image", "source": {"type": "url", "url": u}}]
+    content.append({"type": "text", "text": AI_PROMPT.format(listing=json.dumps(listing, ensure_ascii=False))})
+    r = requests.post("https://api.anthropic.com/v1/messages", timeout=180,
+                      headers={"x-api-key": key, "anthropic-version": "2023-06-01", "content-type": "application/json"},
+                      json={"model": os.environ.get("CLAUDE_MODEL", "claude-sonnet-5-5"), "max_tokens": 1500,
+                            "messages": [{"role": "user", "content": content}]})
+    r.raise_for_status()
+    text = "".join(b.get("text", "") for b in r.json()["content"])
+    plan = json.loads(text[text.index("{"): text.rindex("}") + 1])
     n = len(info["photos"])
+    plan["slides"] = [s for s in plan["slides"] if 0 <= s["photo"] < n and s["photo"] != plan["cover"]][:8]
+    if not (0 <= plan.get("terms_photo", -1) < n):
+        plan["terms_photo"] = n - 1
+    return plan
+
+
+def plan_slides(info):
+    """Какие фото на каких слайдах: texts/<объект>.json → Claude → по порядку без подписей."""
+    tf = TEXTS / f"{info['object']}.json"
     if tf.exists():
         return json.loads(tf.read_text(encoding="utf-8"))
-    return {"cover": 0, "slides": [{"photo": i} for i in range(1, min(n, 8))], "terms_photo": n - 1}
+    n = len(info["photos"])
+    try:
+        plan = ai_plan(info)
+    except Exception as e:  # без ИИ пост всё равно выйдет
+        print("ai_plan failed:", e)
+        plan = None
+    if plan:
+        TEXTS.mkdir(exist_ok=True)
+        tf.write_text(json.dumps(plan, ensure_ascii=False, indent=1), encoding="utf-8")
+        return plan
+    return {"cover": 0, "slides": [{"photo": i} for i in range(1, min(n - 1, 8))], "terms_photo": n - 1}
 
 
 def render(info, outdir):
