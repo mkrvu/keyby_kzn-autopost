@@ -1,0 +1,30 @@
+{
+ "type": "Евро-2к",
+ "cover": "ЕВРО-ДВУШКА",
+ "title": "ЕВРО-2К КВАРТИРА",
+ "name": "ЖК Свобода",
+ "price": "85.000",
+ "ku": true,
+ "deposit": "85.000₽",
+ "commission": "от 70%",
+ "floor": "21",
+ "area": "45",
+ "object": "62953",
+ "pets": "",
+ "address": "Козина 9",
+ "district": "Ново-Савиновский",
+ "photos": [
+  "https://cdn4.telesco.pe/file/J0Lcrw0eslAQDWrqZ_y7wwaU9ecpmhUWNLXaCz5ieWbU7tqm7nqOWEhjzq1-Vch21VeWoNKze2puib0TMoHDz_eYcOxnq4qvvxm6PTleoNFlq5Jw4yZ-2MCSme-6lXrWSs1DsH8PSjTEYe2IPkbsE9_Nq4OgtZJn7E9BZxFkvHoq4Hs-tMa9volxPkzqiU4bQgzrSUKbD0FG0OaOQ8CGJdVQiV6J7HFzCU_7_PTcq35mpdX1ZSe2gA_3PlOo6RiUvoizn_y56d9jRRDrkKAYqc4CQdOG6ICQL8IKHz_-k14J69C0BJ31AXhUhYV-2o0pm9tpFZo_V-u2zJ214cAg1g.jpg",
+  "https://cdn4.telesco.pe/file/pgIR5ygY_kc1UAyBIlWJDHf8pm0WowAynk5M-aHEeKKIdNcBC-lkno4Sva58yB6Gljb510-2bjp2OLmFc-qjqwqrweUiQYGkYMN9fYvgjUXQ8PUr11RvuNxIqW1WYEbkfflxKeCIwHFVup7WadYQ1EXVGCUsFl5Vd8jrCCox-k3OrIS4fh1Q8MBKNA198re6jDR_tcGSPrj1XcwVr9Kw7HsfccNpap0exIHV9XsZ-GYVItzMm_IQmy13cnor-3O7QXAInGPRBv0ixULoDgSQpxE1FB3ikxc4u_KhwPJDIbzjXyBt86jQpeI3B3qmx0uK7ktsDaAx4ez93kG6qmRGOQ.jpg",
+  "https://cdn4.telesco.pe/file/MvSX6DhzlmCx1M1btYLjSeNxWxuZm9c7BP0fwrRYgxeYt2jwkZTnXSClpq_TY-IoBydhTICXqrp6ipZRPRFJrqKypa6LPitbCUNoQBL0udtMCDdlFTR5_NbxLMGH-gEwcGLQPuhq6D5aH5GfGnkke8AB4gUCgB1XEAMzOxYN-jDd6Yj1ZCegYjKIMSCMF_ThnLAAMKnomqYDaeEg7qemF2UUn0LAWa8tIKMd701Wdh0k3-fD1pEY56T7s-599gE1GVJV23Q4U88gx1igGVC7fE93Bq9Jq-Xp1cLaonvZSUZdTVpu_P-hr2-keUVZeZ17HszH9iEofUSeYu5xYTKIOw.jpg",
+  "https://cdn4.telesco.pe/file/kUKka2usAb4xVUeokWQ8y-Cn0aOsp7JaqJKjm_gCN3XOYRxxMxTHyBPYdR_ZqvgS1aqs_wbeEpY64oIE2TbHB2gzsQ-Ik4R-wqk_NUKUwMSslOxSFnAEg60Hr9SS0RlV_fWk0GnUS2EMsotv0gT1xR8sM1FUTdwrbmGDdaojZxugEOH6KgLR7oKjrNHmW86JLYyq_x29T43ed5NPIOjYb4B5eOfSWQrViEQMLd41AUaI0RHn_DAwsbttY_ZTOnBBzNiJZT3BD9z5-iXNfq0adKHjTpiyAaK3yRe-nxRm2azNvo0xYQl8Jtm3ax7zBjkQf6CD5l74fIOFvCcaHJ6X0w.jpg",
+  "https://cdn4.telesco.pe/file/IRfENoO4jSDe8atkVO1FGgVk1VFGmjJoDpJiymw71ZDDIwvgdYrIFMvbyMdM13dYkN9LoBIsdnwj-NOu1mJ0Of26lO-KtVpL01Sg_vgtpG1cWFq5XH50OxIRMPd8QJGyRHt3pK5iZwN9ShX6nZ0DEaBEifXoeBnNsPhAzR-tPo25qH-97mJGtbCWFJyiQvUnrEi_XnQIxwVh49UM4By7cllVx2RY6zhg6t2Ll0bp2h0Jx1C9PmxcsG3bpH66glwISChcsAY9H9iqd6bHMws4ufEn6qBR8M00F1cUrjNcC4VTFQ3FeoEF_0z5VuDV2cH9UzdRYB6L65J7Ap-G_0mpcA.jpg",
+  "https://cdn4.telesco.pe/file/FYf4f-qCXLjF8NQA9qAKqGZd0PUf6hq2du29VKj3ipVGUVIVaf3eSeKjjw1qiNtnX0DKn6qQE-8boasAhKg8uAqvaNYzMZYDSvZRUJGyB2Sqbi9peNTCSnF4XMdqMjhplg0BW4on4SAC73s2RdB62cFzlBROQMAfm1RswMvpJSiN_zEAudr0X4-kvUtUJR4OHNk8ICE7E5-5fm4rj5ZwuOlIW0f_63ibkInaA7bo3n8j0tDrTCBYM5aJpdnXFbF7ZvzGLWgQ7wazCId0UNaB140j65GVtIR1A_F7KmDFV7U79ObJkeigTTnTuIo2nIguAfIO4S7vJWefpNVPgqtKqQ.jpg",
+  "https://cdn4.telesco.pe/file/UjM-MZwe-IignQUwDFM5PSdISMJrWo2qgNxxna0aIEFBoughIjZAYYdGLcJ2VkGkZDw1i4RjK1PYfgRqnVJak86IDfuTscOAZVnYMGBwA_1mWrLFnIQjC8ZTkGuRjub6Q3B-DGXR1sa9CL5C8s1Pu0Z4qwNwVoxXWQvnGz66__MZUX_DwWcO-AK-6-_LEA0dSJT9ec1LsqgnUrIueot_G2IdQcZHrABK9A8CmZg4RPnrE6LWbACix1qppYHqDItdLLhlpF4Ncf-udEWkXufkYuqNGKv_W1GedV_qcSNTmpB768FjJ-aRjauZxAcuVBX-oo2eVf0wmp4-zGwgtuZAIA.jpg",
+  "https://cdn4.telesco.pe/file/NECAzJbRE7V2IpF0ZF_QVOL3rMUaVUHx4Kf3abtfRki8AeUPz_vQrjiLiqqgBtTqX798aQXbbwjQGYu4Le0W4Nf9us3y09OjGGt9NJoySVCKXYnOtZfg-ChnFuvL2ncsmfY-PAKbsCogXaYWG65oZ992TBSu9iT-lBvWxiD-6rB-3DHgOdvXZsvVguvTKiV5yoZ4IkDZWt_0-hGX4iBKd7TwLrPiPTTIGuusBRpX7gNgQXL7jOTvVK34F--Z3tVDXyBDbIQnsfaQDBNjiFOGOwlg9QNIfgQ3Vtnanypm2k62fH0GE0widhh8WaDlBV4OHdIaH__u3ISwc-K-vfpr7Q.jpg",
+  "https://cdn4.telesco.pe/file/OHUiC83O6nF2PzYRY0BaRy6y-x8hywEAi-tfNRPWkAtj5zaMOm0nGXEWjUpeoj822c7t7S_cqKE2XEx5EO342Rf5u9phGyKPIFEAzYeTsWH0MmjJQTKtueMD1LKY_cQquB9WiDYSR8dNTqioedg4R03coYhUyGrHtQ6A2uUoOPfXVIInnb0S48xUGLZcqRLh-JCdGNWakLrIJE4nM4jAme9enNR2r1I-9-tZJh1mp-0kx1l-btcRXEkh7Z1UsB1a-afGf_7iISeUPOz_V4ZVlHqCvaOCqmGYtacpOsweV8qi2p4-hJJGV8iqYglSLuq2N2TJlh5vUPp4cRXyDQ7rpg.jpg",
+  "https://cdn4.telesco.pe/file/CN1vZQt9kx_xUEqUubzIxgbB_0wmUvH4jpKedQK3Z4CQBHKbskFMSH1bG34DrXUN6k8-jmHJQUh501296e_NNTD0Me8vN7YExBwOZdx4qv1WvKDVFCaTgT6ofwih_wRhonxINocZ8MHTVOuM2UrdJvz__diE42iGCgN_rJ6dK8PjO34u2EvHYKXrvhyfhNpGAusalCxDzDmtM0zHquOvRixXxK6qCFvYz2T009eqKQFjumQ96_wT6GRu3TUfe4Np_zMnPXI-81j4Qn7SS1bbeynS5qVvc3o83AUdjmhvLxKQjJZeEbeglfZYFeAm9St3HMNge8kPPCBA9P_EOhefSA.jpg"
+ ],
+ "link": "https://keyby.ru/apartments/ef860303-5382-475f-8062-75457274f247",
+ "tg": "https://t.me/adresakzn/595453"
+}
