@@ -1,0 +1,27 @@
+{
+ "type": "Студия",
+ "cover": "СТУДИЯ",
+ "title": "СТУДИЯ",
+ "name": "Дежнева",
+ "price": "28.000",
+ "ku": false,
+ "deposit": "15.000₽",
+ "commission": "от 70%",
+ "floor": "2",
+ "area": "",
+ "object": "64145",
+ "pets": "",
+ "address": "",
+ "district": "Кировский",
+ "photos": [
+  "https://cdn4.telesco.pe/file/n5hVCPP37qfcWxfGExFOE3A6Es79EAxQHmola0wQ29jnRTD8igxGNVmetzwtJPsZliTFaXhcVcmT8a1BZpItxTmGZPRaFWmAulQFrqvQL6SsydDi89WTiHBWBUAePOMLLBTVueZVvaoHZ3_kn8qofFI5CKzHPf5hjETyEZ6XALMdjYG6kIKXv-DL8vzgmg0zxERR17nV6vA7xvleE9j-prcyemBzWrnLHK80hfCz365wdpgTbokrtL9PWPwOwnnRbAurXfRjra5W5F6iw6bCBk7Msgi5j7thZFh9HjmapS1Dq_bFCKcd7JvQJ7DrHD0C4lTiQDup66xLeSZdA-gntA.jpg",
+  "https://cdn4.telesco.pe/file/BnvSo80EH4b-0bTmDMrZSZ_PjEhVXLRbCr6bjhzZ5RzkZxbxgXyVgq7PqGpgjpQM8Nd-Tg9XdeM-0LqMl4XDXS4LqZwJsR2F1XuAmD7P27oHuZ6NOeoftHtF1jJ4SH9v1rDIMjBp1d2lqnlTGtJZqZw6_pbKhIqXUHfPnl-E6HYOGEzismF6Mpby9noM0Lg8b5gpZEspz5buH810uHz-9U8Pgk-r_kQHmHeNtL_DKYOHCgVmzxE6qAVvDL_GNrbkSXPmNRyzdfnHhtLI0FAyvjrXBBXR_86tPAzQhNWmD0webJgyq7_KORSgJJFv9S6GO1kGxpi1JyZmmv8lP7-W8A.jpg",
+  "https://cdn4.telesco.pe/file/YtsHkR0wma_IqQp3R8ktXdPwlleElUu5e20WmHhowv8Up4v6KNncpv7P7S1iopveXVBx1OHCFj6JzLjeW7KLJvBCBR8fxkqHyRC0EnKzlUkL4TTV6LY6SDflvokc9qLKclrQvz96VkUD31hPV1YXCXcvLcbnq2eeiYiTNDqq-SuNa2K0Rv7urnR2SuOoqmhUyZUzBoS3fRmcs8IUuiOkS6gU7XfeveSN-1MGk-1hVIZt_fZxVjkY8zYuh8A0Xib4FE3A3iao4RsIsTVv8KRyuOAn-75nrglu4p2OfFQfmmH7fjg9IDIEvvCqRD7QGzxd7jN4I6BeuMYblZyQpjeSkQ.jpg",
+  "https://cdn4.telesco.pe/file/QYb7KBnpv_8XkpRVMl1pDZtFxOIqea5JKeosPlLem-PHwcrtvJgdgOZXz1TjYtEN2IPKEYnjEJNh3VZPu8-UV9TkxFHFPQ5fmEE0DEAOOF9_V-hfqjuN_K7hy2mj3mjWDJvyEfSpy9dKJz_zG38U2aUNJG7aDq4Y923XNlIOvtqX7PqnV-DhxD38C13rfoaB-GUNKtST7KddSYwpA-xJECu7h1V1IWoj4_9E_9dGG3SLJZV8HakXiJuPvZKe5G4zHw7m_2yCc3m7nOG8tr6LT1i0uXqmCW_A2_kKzfYN9h1NabBShkITgz0wPKeeZ3NTq9Ckry64nqLRCHTlA25rfw.jpg",
+  "https://cdn4.telesco.pe/file/ROP7m_HFGGBcVEihLVaCN2PMLkB0RMxDeD0ilVbCA9bHTIn-UvVGN_TGod7WnglSKfmHlPSfleRBi5zCq7gjx-lq_IoIghstpmx9zvUd-4NNx64owH-t6gDX_smADUd9SBPMiz-08dfuv0l9SRl1o6Vx9ZjPXRMCAPdVXDVE3S9PImcQxr_CVDD38IgUC24kcIndWAIEBqthIfPE6Ln_khyibAmpUe4zGhpaLu-ieFoThsMvljiDvmQBstS7sba58DmFwgEbH-WtBxFQJCbH79fc0rdNMSWt44RdBEYsgBcb2yuw1HDyrzlSGFn_V7Q4kc-14g1jUh9jIQMFLfUHuw.jpg",
+  "https://cdn4.telesco.pe/file/SMzL40QpGQH77-4rxn-mX5oams9L3QJCRxcOOkl43RmYNRtxMfLZ6dWZfWh6-pwXZqwPS4lfJGhGIbTaJJWgLapaYbL9ozUO8OpKyD3lwmUIS4It1SLHg6lF7TgrURzZq6Lbu2JD3RCRtpi6YxNZ2u0vjocxHLnIP4zlOPVNLpthgp1SAPCfElgZ66RwNdMHUWqsvhWsvHabxD5XzFu58lDqI7P8P35yQ5nM0nhVvZH0cAxDx6HEuDj-gXyJMyeYkQefytP8t7Wtu0Sv2HlV8Z6ojAYkJ62vtcBJAL9BFJQnj4g6M3NyECzm6tN05AqHjckogWMczKxF2W6SGLP-Sw.jpg",
+  "https://cdn4.telesco.pe/file/qIudLIRsx7cG3DLxqwDnoisYwDiQ1fqpwdD5LU6EnU-gt6dRwYgU5UyhQV0-OTmzDJx0p6JiB1AZynaNwhyPDCK0aIhDCKbBu9BhMdH_VWNd_SgSsZmHG5IPH0rg0jWuX9aw8TUz7rJbdh6f8U9KtLoQ4f-rN83n_NwhoxaiWxp-70moaXLTlVgB3hPzLSAPEEr2JY3VIEenO_oXGo2nldke26VqDkTuRC5v38a4u62iOcR5FPirG3sMIXR1A0BHO8zSSAp9BitdarCoOpZhTJ_C1-XNXvQIXC_jhByMUhwb6o2enm4dDV1-yNN2ycafU9oJ5hCV_6nmJqAigDIWmQ.jpg"
+ ],
+ "link": "https://keyby.ru/apartments/bbd0b742-75f8-43d7-bbdb-d191715b2712",
+ "tg": "https://t.me/adresakzn/607107"
+}
