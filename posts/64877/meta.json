@@ -1,0 +1,29 @@
+{
+ "type": "1к",
+ "cover": "ОДНУШКА",
+ "title": "1-К КВАРТИРА",
+ "name": "ул. Ершова 55а",
+ "price": "27.000",
+ "ku": true,
+ "deposit": "13.000₽",
+ "commission": "от 70%",
+ "floor": "",
+ "area": "",
+ "object": "64877",
+ "pets": "",
+ "address": "",
+ "district": "Советский",
+ "photos": [
+  "https://cdn4.telesco.pe/file/ngB_qJJ2rr0BUm4lLvRQX59CSg3q2Cwnj_Xafeicswigwve76K0r70m-WYviFtmkkyTYKaATHHlVz9heuRaBDFVOVVweYEySJm9d9QCZWEAAxUOSzYjNodca4Sd89RRTB9Hb5H7ICWEgbe7bM9VZsjeJmMilx-1TOrDf5yDedEZpAnsceZYwbRi9Oab4okM5Dqcu2Yt1nDSxzen-ry6Xz-Y-MG6h1m9Nvz-WOYRt4jf1sownDgO5rMQ7RPukfG5_f7fnwLH_YwEXqsZmtYFNwdE22urfJOSzccXFqGOS4bLPD0PmsgFj71xlFaX7tU3RIHqLlz65Zn-vB7N3Ef7gLA.jpg",
+  "https://cdn4.telesco.pe/file/L8ppClDZTD3HqcnI5YBYE6kS1ZyzXBDBwELHPjoRV14XFP7DcUTjGix4jAr_AzXn0XpQtZII3UrcN_YehjMf1VbiNNIzMzKm_zADWNnnf_6piTUVhhdKUkgEkgnpghfut_WbgORuBcgygkAtz-vspZwRQprRKAVpx7PblO6T8c_xgxqpmPJHq8BmmPoYBkvkzLy76IUrjZ4LSV_Fm2Vno2COPGb-S8zl8J1UenD8FHlRLSmuEHBU4cw7-kCBi9eblQmOws5mgnc7MY-84FyYVyZnPrTlCoJadF3AKdc7tIHW__1koi8bvsc8lPBY7YUvU0tbElWkLJ3vg8eoloN32g.jpg",
+  "https://cdn4.telesco.pe/file/t9fEvT8CWunhexR9NF2x1teGj2BJsrPmfwp67Lf8jq0eqlSpVdI8Sd2bJhrrekK5PBK3elfG-NSbb7JMOkoMAn0bR9h16NllWvo2enaVsli5wGgqHDKbdxYHHUz-JQrqhTwSJmhE_idQhEVrItmqWpEoLO7JYiYjkWnOSgF86N-fS053vow1xVB6S_F7rDK7PD8hnrMlA0y2W_uREeFosS2fLNxCjI3DqPXMbwm71NptY3zwnpJNCpHoKRSL3OCeDgtfUuev8oIWKaPV3lRVlwK6OHppprZTvXx0-nYrzf9HWP9NmBS8LdyZZv5YMS1kIMBy5C2DxFD-1Lv-C-46MQ.jpg",
+  "https://cdn4.telesco.pe/file/lTwowQcNFUha61yJluFNCHeFGz_jgIcBpR1LtixvE7jZewthbMpiB5LrbGS5tNcR_a0jcUPcYd_e5jdh_jGUtx2tuv6_aTN3jpiacEduw3EI-jalwM0jaVK4Zct0WYtv01ArGTU_jf3ryfuUBN3BkymnOiQCJYOoQl09lYTaEU96R0_7QYuMXAX1l_fmOe0-3l9Auxs97vEpDA4JmBiQo7KIKElfIcZn5RFEYBOLLK0hcYDUsVoBMK1I9RPdtgk9gitDL91AAx3WTGRlaeXm3kK2oNVs9MD5o03qPKmaE1y17CJyuXgY1qaT3Pf9jN4914ADfPSCbb2olQqzcPQmdA.jpg",
+  "https://cdn4.telesco.pe/file/qEdQ4GJfHyrmrOoazYT46Mgd3Kwx2L89jUg1tq1F7tk1Le4S35RPdhK1jE_a6XMxfPOtewRQ2A_LsWy1tahZABuRpFR3e4F8XINMqLWrXKWgnxegGCdEOTFPEdOxsNFNFCXJ4ozsHG2HYHz59v5jW_BUE3jgxeBH4vA4KgR3NijjCLah4jLUznzdtTOCtZ5I4PZ6ZVs0sjW7nyp6vrIGCyjANxLalVxQMmpSqDaQ8tZCCDAseRNiVXcQZp-YbbfiYjAV1-EI2JqywjC0uiBLcIBHTSQ3OH-BMBMmAPoYR9CaGqdrxgQ4G48uPaCu4IhJyLIlVHftAuU6tcbLQFgjxw.jpg",
+  "https://cdn4.telesco.pe/file/TwKGFLDy9k2xa54HegwBMdTHf40TahXDSfGSH8TitYPzh5fSZzMF6BIxqD3xdaItNYpqNLDKJIlWWcBcBqtS0AlZykGfKi4R7NmQH1tipRY8APZTa9fS8hkhMPWgsoIgsaFBoqpijUqycLBRhxNlmTSGOs26LPzWPjZmcmLvbVywKWVTs_Oc1gftSAAWr4r8_yqBB9RWV6a0EKGUiFfe-aiYotBuklzBlcDO6lZOPIfWiQNM39AlUkFmeKOBUMubUlNh4HMylb8LVBYEvBUP1ThMsX8A7NlGfK7Jv8nnOEB-83lFQGoGWc85TlCTQx7dHFIQCgL5uV2E6SyPbZ6cAA.jpg",
+  "https://cdn4.telesco.pe/file/L_RzzYX4YeyN9I3_Y-y_TYU-tExf35z1APy2Y1-ydPb8j7YORyKNLcDt_yy8Qfa1BR_5zM0W33z8R2s6ZFc0bz6lkUTvKbRvbOuHvw0NACYTtN04SPI443eP20wZDagSS8osI43SncSlS4cmXStoEV1Dc4UClqOubaE1qaoX-OPnYE_a0x8T-3zdsGAwgW4crYeJuD2H-KI0p49C-liY_Y9-vk8sCyR9F2TSB9qTDMSVxG9_wtUAQ4b-X5wTSHX8dwN2nQ3DOdf-BqL-xSnWSE0hywbWalfM53yDjhfvdcVMhLTeDrTIgW7PJE6CFFjp-oODw6z2bAMZn81o8tgxQw.jpg",
+  "https://cdn4.telesco.pe/file/SD7tRZVOiF-hbm6JC34pC6Ni6cnOuhTVHmcAvPbMh8Myi1yAeFkZa0fXIRN_6BsTy5a3_KUBbAYQ3KyM7MhKCx766QOgMAvxxZmg5vySPMoX0Xnc-mKS6JFE3RFocmCNO2ZzObBFwKh_Fwp4ZF0zd17omwxLQE_Ek74u7rQ20vsAv3eTcDTrrzhZoqoiVY4__kGLamxaSdjGZkx2_zk2rSeNICO4t4f7qB7kRyuDeBuxn9-zmqnm0BNaOJez5jC54h0BVFJNdmndKwEqwMi_a94OGd_2S6dkqD_jSJfEopR10Hhrzium_Af0aCrzE3kEPwQX-vblhit6E_Y9Uiv_bA.jpg",
+  "https://cdn4.telesco.pe/file/ll4eYF7Tj0P5zJwRm2i2GvW7IpvYcP2eeZxG0D2xzkMdmIL-RNu6oX6If263i9oytRXNnS6r1ZDTtNl9Qd2UI3L2WZzHe46q5q_4RQlo0tu2Cko-HLAQbOqZtsJY5feqpSph68anWkgCJgHpq005YO3kP1hyVDzgxdMCyNTR_xN0fwyxLSDJzbqAF9ceFql5jUXSs37k1fLLeqcYRJNbUdoptNWE5Jvv6Z3kive-m2I2Heyb-Rs584cVK3qfueiHYJBWLJSLFpv0xvdv2Q38mxLheTfm0xe6uha_EToszpqjAFYqRozHEPp6w8s-RjH3tebbY6mv6dtfNCdEI4EQig.jpg"
+ ],
+ "link": "https://keyby.ru/apartments/6ffa98d9-811a-4a74-9dd1-0fb136fb0d9b",
+ "tg": "https://t.me/adresakzn/613639"
+}
